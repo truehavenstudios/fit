@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fit Sync Test</title>
+<style>
+body{font-family:-apple-system,system-ui,sans-serif;background:#f6f1ea;color:#2b2622;margin:0;padding:24px}
+h1{font-size:22px;margin:0 0 4px}.c{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 2px 10px #0001}
+.big{font-size:40px;font-weight:700}.mut{color:#7a6f66;font-size:14px}a.b{display:block;text-align:center;background:#8a9a7b;color:#fff;padding:14px;border-radius:14px;text-decoration:none;font-weight:600;margin-top:10px}
+pre{white-space:pre-wrap;word-break:break-all;font-size:12px;background:#f3eee7;padding:10px;border-radius:10px}
+</style></head><body>
+<h1>Fit Sync Test</h1><div class="mut">Testet: Kurzbefehl → App, und App → Kurzbefehl.</div>
+<div class="c"><div class="mut">Schritte (zuletzt empfangen)</div><div class="big" id="s">–</div><div class="mut" id="w"></div></div>
+<div class="c"><div class="mut">Gespeicherte Tage (bleiben nach Neuladen)</div><pre id="d">–</pre></div>
+<div class="c"><a class="b" href="shortcuts://run-shortcut?name=TH%20Fit%20Sync">Jetzt synchronisieren</a>
+<div class="mut" style="margin-top:8px">Startet den Kurzbefehl «TH Fit Sync».</div></div>
+<div class="c"><div class="mut">Roh-Daten aus dem Link</div><pre id="r">–</pre></div>
+<script>
+const K="thfit.test";let st={};try{st=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}
+const h=decodeURIComponent(location.hash.slice(1));document.getElementById("r").textContent=h||"(noch nichts empfangen)";
+if(h){const p=new URLSearchParams(h);const today=new Date().toISOString().slice(0,10);
+ // steps=1234  oder  days=2026-10-01:8123,2026-10-02:5310
+ if(p.get("steps")){st[today]=Math.round(parseFloat(String(p.get("steps")).replace(/[^0-9.,]/g,"").replace(",",".")))}
+ if(p.get("days")){p.get("days").split(/[,\n]/).forEach(x=>{const [d,v]=x.split(":");if(d&&v)st[d.trim()]=Math.round(parseFloat(v.replace(/[^0-9.]/g,"")))})}
+ try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}
+ document.getElementById("w").textContent="empfangen um "+new Date().toLocaleTimeString("de-CH");
+ history.replaceState(null,"",location.pathname)}
+const ks=Object.keys(st).sort();if(ks.length){document.getElementById("s").textContent=(st[ks[ks.length-1]]||0).toLocaleString("de-CH");
+ document.getElementById("d").textContent=ks.map(k=>k+"  "+st[k].toLocaleString("de-CH")).join("\n")}
+</script></body></html>
