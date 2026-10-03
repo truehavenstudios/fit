@@ -614,9 +614,12 @@ html[data-dark="1"] .restbar{background:#F3EEEA;color:#2A2725}
 .req{color:var(--bad)}
 .sexseg button{padding:10px 13px;font-size:1em}
 @media (max-width:420px){.ggrid{grid-template-columns:1fr 1fr}.gopt{padding:9px 10px;font-size:.84em}}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 18px;border-radius:30px;border:1.5px solid var(--line2);background:#fff;color:#1f1f1f;font-size:1.05em;font-weight:500;box-shadow:var(--shadow);cursor:pointer}
+.gbtn:hover{border-color:var(--a)}.gbtn:disabled{opacity:.6;cursor:wait}
+.signin{text-align:left}
 </style></head>
 <body data-theme="Sage"><div id="root"></div>
-<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";</script>
+<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";window.BP_REQUIRE_LOGIN=true;</script>
 <script>/* Fitness Planner engine: dates, Health sync parsing, streaks, readiness, cycle phases, records, insights, reports. No DOM. */
 const E = (() => {
   // ------------------------------------------------------------ dates (local, 'YYYY-MM-DD')
@@ -2390,7 +2393,7 @@ function vSettings() {
   const look = themePick(st) + `<div class="row sb mt wrap"><span>Dark mode</span><div class="seg">${[["auto", "Follow my phone"], ["off", "Light"], ["on", "Dark"]].map(([v, l]) => `<button class="${st.dark === v ? "on" : ""}" data-act="setDark" data-v="${v}">${l}</button>`).join("")}</div></div>`;
   const health = `<p class="small" style="margin-top:0">${S.lastSync ? `Last sync <b>${ago(S.lastSync)}</b> · ${S.syncs || 0} syncs so far.` : "Not connected yet."} Steps, distance, weight and more fill in by themselves on iPhone.</p><div class="row wrap"><a class="btn pri" href="#/sync">${ic("heart")}Apple Health setup</a>${syncBtn()}</div>`;
   const data = `<div class="row wrap"><button class="btn" data-act="backup">${ic("down")}Download a backup</button><button class="btn" data-act="restore">${ic("up")}Restore from a backup</button><button class="btn" data-act="exportCsv">${ic("file")}Export for Excel / Sheets</button></div>
-    <p class="help">${S.lastBackup ? "Last backup: " + rel(S.lastBackup) + "." : "No backup yet."} Your data stays in this browser on this device – no account, nothing uploaded. Clearing your browser's website data clears it too, so keep a backup.</p>
+    <p class="help">${S.lastBackup ? "Last backup: " + rel(S.lastBackup) + "." : "No backup yet."} ${cloudOn() ? "A copy is saved in your own Google Drive automatically. You can also keep a backup file." : "Your data stays in this browser on this device. Clearing your browser's website data clears it too, so keep a backup."}</p>
     <div class="row wrap mt"><button class="btn" data-act="share">${ic("share")}Move to another device</button><button class="btn danger" data-act="resetAll">${ic("trash")}Start fresh</button></div>`;
   return head("Make it yours", "Settings", "", "About you, goals, colors, Apple Health and your data.") + `<div class="grid g2 start">${card("You", you)}${card("About you & your goal", about, { b: true })}</div>
     <div class="grid g2 mt start">${card("Daily goals", goals, { b: true })}${card("Apple Health", health)}</div>
@@ -2436,6 +2439,23 @@ function vSync() {
     ${card("What comes over", `<div class="list">${[["👟", "Steps, distance, floors", "iPhone in your pocket is enough"], ["🔥", "Active kcal & exercise minutes", "iPhone or Apple Watch"], ["⚖️", "Weight", "if you log it in Health or use a smart scale"], ["🥚", "Protein & calories eaten", "from apps like MyFitnessPal or Yazio"], ["❤️", "Resting heart rate & HRV", "Apple Watch – sharpens your readiness score"], ["😴", "Sleep", "asked in your morning check-in (one tap) – no watch needed"]].map(([e, n, s]) => `<div class="item"><div class="emo">${e}</div><div class="grow"><div class="nm">${n}</div><div class="tiny muted">${s}</div></div></div>`).join("")}</div><p class="tiny faint" style="margin:10px 0 0">The shortcut only reads – it never writes to Health. It sends today's numbers straight to this page on your phone.</p>`, { tight: true })}</div>`;
 }
 
+// ------------------------------------------------------------ sign-in first (full app)
+const needLogin = () => !DEMO && !window.BP_TEST_NOLOGIN && !!GCLIENT && !!window.BP_REQUIRE_LOGIN && !cloudOn();
+const GLOGO = `<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.8 6C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.8-6C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.2-13.5-9.9l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>`;
+function vSignIn() {
+  const busy = G.busy;
+  return `<div class="ob signin"><div style="color:var(--a)">${ARCH}</div><div class="caps">TrueHaven Studios</div><h1 style="margin:6px 0 10px">Fitness Planner</h1>
+    <p class="muted">Sign in to start. Your planner is saved in <b>your own</b> Google Drive – so it's never lost, and your phone and laptop stay in sync.</p>
+    <div class="card pad mt">
+      <button class="gbtn" data-act="cloudConnect" ${busy ? "disabled" : ""}>${GLOGO}<span>${busy ? "Signing in…" : "Continue with Google"}</span></button>
+      ${G.err && G.err !== "tap" ? `<div class="note warnn" style="margin:14px 0 0">${esc(G.err)}</div>` : ""}
+      <ul class="small tight muted" style="margin:16px 0 0">
+        <li>No new account, no password – just your Google account.</li>
+        <li>The planner can only see its own file – nothing else in your Drive.</li>
+        <li>Nothing goes to us. There's no server – your data goes straight to Google.</li></ul></div>
+    <p class="tiny faint" style="margin-top:14px">Already used it on another device? Sign in with the same account – your planner comes along. <a href="../privacy.html" target="_blank" rel="noopener">Privacy</a></p></div>`;
+}
+
 // ------------------------------------------------------------ onboarding
 let OB = { step: 0, d: {} };
 const OBN = 5;
@@ -2450,7 +2470,7 @@ function vOnboard() {
     <div class="card pad mt"><div class="frow">${field("What should I call you? (optional)", `<input class="inp" id="obName" value="${esc(st.name)}" autofocus>`)}${field("Units", `<select class="inp" id="obUnits">${opt("metric", "kg · cm · km", st.units)}${opt("imperial", "lb · in · miles", st.units)}</select>`)}</div>
     <div class="caps" style="margin-bottom:8px">Pick your colors</div>${themePick(st)}</div>
     <div class="row sb wrap mt"><button class="link" data-act="obSample">Explore with example data first</button><button class="btn pri" data-act="obNext">Next ${ic("right")}</button></div>
-    ${GCLIENT ? `<div class="card pad mt row sb wrap"><span class="small"><b>Already use the planner on another device?</b><br><span class="muted">Sign in and your planner comes along.</span></span><button class="btn" data-act="cloudConnect">☁️ Sign in with Google</button></div>` : ""}`;
+    ${GCLIENT && !cloudOn() ? `<div class="card pad mt row sb wrap"><span class="small"><b>Already use the planner on another device?</b><br><span class="muted">Sign in and your planner comes along.</span></span><button class="btn" data-act="cloudConnect">☁️ Sign in with Google</button></div>` : ""}`;
   else if (s === 1) body = `${cap}<h1 style="margin:6px 0 10px">About you</h1><p class="muted">So your goal dates, calories and plans fit you – men and women progress differently.</p>
     <div class="card pad">${aboutFields(st)}</div>${nav()}`;
   else if (s === 2) {
@@ -2561,7 +2581,7 @@ let lastRoute = null;
 function render() {
   applyTheme();
   const root = $("#root");
-  if (!S.setup && !DEMO) { root.innerHTML = vOnboard(); return; }
+  if (!S.setup && !DEMO) { root.innerHTML = needLogin() ? vSignIn() : vOnboard(); if (needLogin()) gisLoad().catch(() => { }); return; }
   const r = route();
   const y = scrollY, same = r === lastRoute;
   let html;
