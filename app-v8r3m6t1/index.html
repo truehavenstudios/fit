@@ -622,7 +622,7 @@ html[data-dark="1"] .restbar{background:#F3EEEA;color:#2A2725}
 @media (max-width:760px){.sitefoot{margin-bottom:90px}}
 </style></head>
 <body data-theme="Sage"><div id="root"></div>
-<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";window.BP_REQUIRE_LOGIN=true;</script>
+<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="https://www.icloud.com/shortcuts/02348d1db5064627b9bc4ecc8b31f327";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";window.BP_REQUIRE_LOGIN=true;</script>
 <script>/* Fitness Planner engine: dates, Health sync parsing, streaks, readiness, cycle phases, records, insights, reports. No DOM. */
 const E = (() => {
   // ------------------------------------------------------------ dates (local, 'YYYY-MM-DD')
@@ -1160,8 +1160,8 @@ window.BP_SAMPLE = function () {
     const prevStrength = st.workouts.some(w => w.date === E.addDays(d, -1) && w.kind === "strength");
     const day = { steps, dist: r1(steps * .00072), floors: Math.round(3 + rnd() * 11), akcal: Math.round(steps * .038 + mins * 5.5), exmin: Math.round(mins * .85 + steps / 900),
       sleep, feel, sore: prevStrength ? (rnd() < .6 ? 1 : 0) : 0, rhr: Math.round(62 - i / n * 3 + (rnd() - .5) * 4 + (sleep < 6.5 ? 2 : 0)), hrv: Math.round(42 + i / n * 6 + (rnd() - .5) * 12 + (sleep >= 7.5 ? 4 : 0)),
-      water: Math.round((1300 + rnd() * 1100) / 50) * 50, src: { steps: "h", dist: "h", floors: "h", akcal: "h", exmin: "h", sleep: "h", rhr: "h", hrv: "h" } };
-    if (rnd() < .82) { day.protein = Math.round(72 + rnd() * 45); day.food = Math.round(1650 + rnd() * 550); day.src.protein = day.src.food = "h"; }
+      water: Math.round((1300 + rnd() * 1100) / 50) * 50, src: { steps: "h", dist: "h", floors: "h", akcal: "h" } };
+    if (rnd() < .82) { day.protein = Math.round(72 + rnd() * 45); day.food = Math.round(1650 + rnd() * 550); }
     if (i % 3 === 0 || isToday) { day.weight = Math.round((70.5 - 5.5 * Math.pow(i / n, 1.3) + (rnd() - .5) * .8) * 10) / 10; day.src.weight = "h"; }
     if (isToday) { day.sleep = 7.6; day.feel = 4; day.sore = 0; day.hrv = 51; day.rhr = 58; day.water = 2050; delete day.food; day.protein = 46; day.akcal = 214; day.exmin = 9; day.floors = 6; }
     st.days[d] = day;
@@ -2394,7 +2394,7 @@ function vSettings() {
     <div class="row wrap mt"><button class="btn" data-act="aboutEdit">${ic("edit")}Edit about me</button><button class="btn pri" data-act="goalEdit">${ic("goal")}${gs ? "Change my goal" : "Choose my goal"}</button></div>`;
   const cyc = swRow("Train with my cycle", st.cycle, "cycleTog", "Phase-based tips, a cycle calendar and readiness that knows your phase. Optional – stays on this phone.") + (st.cycle ? `<div class="frow" style="margin-top:8px">${field("Usual cycle length (days)", `<input class="inp" data-set="cycleLen" inputmode="numeric" value="${st.cycleLen}">`, "Learned from your logs after two periods.")}${field("Period length (days)", `<input class="inp" data-set="periodLen" inputmode="numeric" value="${st.periodLen}">`)}</div><button class="btn sm" data-act="periods">Edit logged periods</button>` : "");
   const look = themePick(st) + `<div class="row sb mt wrap"><span>Dark mode</span><div class="seg">${[["auto", "Follow my phone"], ["off", "Light"], ["on", "Dark"]].map(([v, l]) => `<button class="${st.dark === v ? "on" : ""}" data-act="setDark" data-v="${v}">${l}</button>`).join("")}</div></div>`;
-  const health = `<p class="small" style="margin-top:0">${S.lastSync ? `Last sync <b>${ago(S.lastSync)}</b> · ${S.syncs || 0} syncs so far.` : "Not connected yet."} Steps, distance, weight and more fill in by themselves on iPhone.</p><div class="row wrap"><a class="btn pri" href="#/sync">${ic("heart")}Apple Health setup</a>${syncBtn()}</div>`;
+  const health = `<p class="small" style="margin-top:0">${S.lastSync ? `Last sync <b>${ago(S.lastSync)}</b> · ${S.syncs || 0} syncs so far.` : "Not connected yet."} Steps, distance, floors and active calories fill in by themselves on iPhone.</p><div class="row wrap"><a class="btn pri" href="#/sync">${ic("heart")}Apple Health setup</a>${syncBtn()}</div>`;
   const data = `<div class="row wrap"><button class="btn" data-act="backup">${ic("down")}Download a backup</button><button class="btn" data-act="restore">${ic("up")}Restore from a backup</button><button class="btn" data-act="exportCsv">${ic("file")}Export for Excel / Sheets</button></div>
     <p class="help">${S.lastBackup ? "Last backup: " + rel(S.lastBackup) + "." : "No backup yet."} ${cloudOn() ? "A copy is saved in your own Google Drive automatically. You can also keep a backup file." : "Your data stays in this browser on this device. Clearing your browser's website data clears it too, so keep a backup."}</p>
     <div class="row wrap mt"><button class="btn" data-act="share">${ic("share")}Move to another device</button><button class="btn danger" data-act="resetAll">${ic("trash")}Start fresh</button></div>`;
@@ -2427,7 +2427,7 @@ function setSetting(k, v) {
 function vSync() {
   const link = window.BP_SHORTCUT_URL || "";
   const step = (n, title, body) => `<div class="hstep"><span class="hn">${n}</span><div class="grow"><b>${title}</b><div class="small muted">${body}</div></div></div>`;
-  return head("Steps, weight & more – automatically", "Apple Health", "", "A free Apple Shortcut sends your numbers from the Health app to this planner. Nothing goes through a server.") +
+  return head("Steps & activity – automatically", "Apple Health", "", "A free Apple Shortcut sends your numbers from the Health app to this planner. Nothing goes through a server.") +
     `<div class="grid g21 start"><div class="col">${card("Set it up once · about 2 minutes", `
       ${step(1, "Add the shortcut", `${link ? `<a class="btn sm pri" href="${esc(link)}" style="margin:8px 0 4px">${ic("down")}Get the “Fitness Sync” shortcut</a><br>` : ""}Opens the Shortcuts app – tap <b>Add Shortcut</b>. ${link ? "" : "The link is in your Start Here PDF."}`)}
       ${step(2, "Run it once and allow Health", `Tap <b>Sync Apple Health</b> below. The first time, your iPhone asks for permission – tap <b>Allow</b> (choose “Always allow” so it won't ask again).`)}
@@ -2439,7 +2439,7 @@ function vSync() {
         <li><b>“Shortcut not found”:</b> the shortcut must be called exactly <b>${esc(S.settings.shortcut)}</b>. Renamed it? Type the new name here: <input class="inp sm" data-set="shortcut" value="${esc(S.settings.shortcut)}" style="max-width:200px;display:inline-block;margin-left:4px"></li>
         <li><b>Steps stay at 0:</b> Settings › Health › Data Access & Devices › Shortcuts – allow reading.</li>
         <li><b>Android or computer?</b> No Apple Health there – type your numbers on the Today page (Edit today). Everything else works the same.</li></ul>`)}</div>
-    ${card("What comes over", `<div class="list">${[["👟", "Steps, distance, floors", "iPhone in your pocket is enough"], ["🔥", "Active kcal & exercise minutes", "iPhone or Apple Watch"], ["⚖️", "Weight", "if you log it in Health or use a smart scale"], ["🥚", "Protein & calories eaten", "from apps like MyFitnessPal or Yazio"], ["❤️", "Resting heart rate & HRV", "Apple Watch – sharpens your readiness score"], ["😴", "Sleep", "asked in your morning check-in (one tap) – no watch needed"]].map(([e, n, s]) => `<div class="item"><div class="emo">${e}</div><div class="grow"><div class="nm">${n}</div><div class="tiny muted">${s}</div></div></div>`).join("")}</div><p class="tiny faint" style="margin:10px 0 0">The shortcut only reads – it never writes to Health. It sends today's numbers straight to this page on your phone.</p>`, { tight: true })}</div>`;
+    ${card("What comes over", `<div class="list">${[["👟", "Steps, distance, floors", "iPhone in your pocket is enough"], ["🔥", "Active calories", "iPhone or Apple Watch"], ["⚖️", "Weight, protein, workouts", "you log them here in a few taps – quick and private"], ["😴", "Sleep, mood, soreness", "one tap in your morning check-in – no watch needed"]].map(([e, n, s]) => `<div class="item"><div class="emo">${e}</div><div class="grow"><div class="nm">${n}</div><div class="tiny muted">${s}</div></div></div>`).join("")}</div><p class="tiny faint" style="margin:10px 0 0">The shortcut only reads – it never writes to Health. It sends today's numbers straight to this page on your phone.</p>`, { tight: true })}</div>`;
 }
 
 // ------------------------------------------------------------ sign-in first (full app)
