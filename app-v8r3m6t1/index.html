@@ -617,6 +617,9 @@ html[data-dark="1"] .restbar{background:#F3EEEA;color:#2A2725}
 .gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 18px;border-radius:30px;border:1.5px solid var(--line2);background:#fff;color:#1f1f1f;font-size:1.05em;font-weight:500;box-shadow:var(--shadow);cursor:pointer}
 .gbtn:hover{border-color:var(--a)}.gbtn:disabled{opacity:.6;cursor:wait}
 .signin{text-align:left}
+.sitefoot{margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line);font-size:.8em;color:var(--ink2);line-height:1.55}
+.sitefoot a{color:var(--ink);text-decoration:underline}
+@media (max-width:760px){.sitefoot{margin-bottom:90px}}
 </style></head>
 <body data-theme="Sage"><div id="root"></div>
 <script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";window.BP_REQUIRE_LOGIN=true;</script>
@@ -1478,7 +1481,7 @@ function shell(content) {
     <button class="btn pri addbtn" data-act="log">${ic("plus")}Log a workout</button>${nav}
     <div style="flex:1"></div><div class="side-sync">${syncBtn("sm")}<div class="tiny faint" style="margin-top:6px">${S.lastSync ? "Synced " + ago(S.lastSync) : "Not synced yet"}</div></div>
     <div class="tiny faint" style="padding:12px">${DEMO ? "Demo" : "Saved on this device"} · v${esc(window.BP_VERSION || "")}</div></aside>
-    <main class="main" id="main">${content}</main></div>
+    <main class="main" id="main">${content}${DEMO ? `<footer class="sitefoot"><b>Fitness Planner by TrueHaven Studios</b> – a workout planner and fitness tracker for phone and computer: goal coach, week plan, workout log, habits and progress, with Apple Health sync on iPhone. In the full app you sign in with Google: your planner is saved in a hidden app folder in <b>your own</b> Google Drive (scope drive.appdata) so it's never lost and stays in sync between your devices. The app can't see any other files, and no data is sent to us. <a href="privacy.html">Privacy policy</a> · <a href="${esc(window.BP_SHOP)}" target="_blank" rel="noopener">Etsy shop</a></footer>` : ""}</main></div>
     <nav class="tabbar">${tab("home", "Today", "home")}${tab("plan", "Plan", "cal")}<button class="fab" data-act="log" aria-label="Log a workout">${ic("plus")}</button>${tab("progress", "Progress", "wave")}${tab("workouts", "Workouts", "dumb")}</nav>`;
 }
 
