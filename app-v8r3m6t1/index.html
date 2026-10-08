@@ -622,7 +622,7 @@ html[data-dark="1"] .restbar{background:#F3EEEA;color:#2A2725}
 @media (max-width:760px){.sitefoot{margin-bottom:90px}}
 </style></head>
 <body data-theme="Sage"><div id="root"></div>
-<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="https://www.icloud.com/shortcuts/02348d1db5064627b9bc4ecc8b31f327";window.BP_GOOGLE_CLIENT_ID="978422515007-ilknnma9i8cbduoc5klk7m2j63k33sdb.apps.googleusercontent.com";window.BP_REQUIRE_LOGIN=true;</script>
+<script>window.BP_DEMO=false;window.BP_SHOP="https://www.etsy.com/shop/TrueHavenStudios";window.BP_VERSION="1.0.0";window.BP_SHORTCUT_URL="https://www.icloud.com/shortcuts/02348d1db5064627b9bc4ecc8b31f327";window.BP_GOOGLE_CLIENT_ID="";window.BP_REQUIRE_LOGIN=true;</script>
 <script>/* Fitness Planner engine: dates, Health sync parsing, streaks, readiness, cycle phases, records, insights, reports. No DOM. */
 const E = (() => {
   // ------------------------------------------------------------ dates (local, 'YYYY-MM-DD')
@@ -1481,7 +1481,7 @@ function shell(content) {
     <button class="btn pri addbtn" data-act="log">${ic("plus")}Log a workout</button>${nav}
     <div style="flex:1"></div><div class="side-sync">${syncBtn("sm")}<div class="tiny faint" style="margin-top:6px">${S.lastSync ? "Synced " + ago(S.lastSync) : "Not synced yet"}</div></div>
     <div class="tiny faint" style="padding:12px">${DEMO ? "Demo" : "Saved on this device"} · v${esc(window.BP_VERSION || "")}</div></aside>
-    <main class="main" id="main">${content}${DEMO ? `<footer class="sitefoot"><b>Fitness Planner by TrueHaven Studios</b> – a workout planner and fitness tracker for phone and computer: goal coach, week plan, workout log, habits and progress, with Apple Health sync on iPhone. In the full app you sign in with Google: your planner is saved in a hidden app folder in <b>your own</b> Google Drive (scope drive.appdata) so it's never lost and stays in sync between your devices. The app can't see any other files, and no data is sent to us. <a href="privacy.html">Privacy policy</a> · <a href="${esc(window.BP_SHOP)}" target="_blank" rel="noopener">Etsy shop</a></footer>` : ""}</main></div>
+    <main class="main" id="main">${content}${DEMO ? `<footer class="sitefoot"><b>Fitness Planner by TrueHaven Studios</b> – a workout planner and fitness tracker for phone and computer: goal coach, week plan, workout log, habits and progress, with Apple Health sync on iPhone. ${GCLIENT ? `In the full app you sign in with Google: your planner is saved in a hidden app folder in <b>your own</b> Google Drive (scope drive.appdata) so it's never lost and stays in sync between your devices. The app can't see any other files, and no data is sent to us. ` : `Your planner is saved on your device – no account, no server, and no data is sent to us. `}<a href="privacy.html">Privacy policy</a> · <a href="${esc(window.BP_SHOP)}" target="_blank" rel="noopener">Etsy shop</a></footer>` : ""}</main></div>
     <nav class="tabbar">${tab("home", "Today", "home")}${tab("plan", "Plan", "cal")}<button class="fab" data-act="log" aria-label="Log a workout">${ic("plus")}</button>${tab("progress", "Progress", "wave")}${tab("workouts", "Workouts", "dumb")}</nav>`;
 }
 
@@ -2571,7 +2571,7 @@ async function installApp() {
 }
 
 function googleCard() {
-  if (!GCLIENT && !DEMO) return `<p class="small" style="margin-top:0">Coming with the next update: sign in with Google to keep a copy in your own Google Drive and use the planner on phone and laptop.</p>`;
+  if (!GCLIENT) return `<p class="small" style="margin-top:0">Coming with the next update: sign in with Google to keep a copy in your own Google Drive and use the planner on phone and laptop.</p>`;
   if (!cloudOn()) return `<p class="small" style="margin-top:0"><b>Never lose your data.</b> Sign in with Google and the planner keeps a copy in <b>your own Google Drive</b> – in a private app folder only this planner can see. It also lets you use it on your phone and your laptop.</p>
     <button class="btn pri" data-act="cloudConnect" ${G.busy ? "disabled" : ""}>${G.busy ? "Connecting…" : "Sign in with Google"}</button><p class="help">No account with me, no server – your data goes from your device straight to your Google Drive. You can sign out any time. <a href="../privacy.html" target="_blank" rel="noopener">Privacy</a></p>`;
   return `<p class="small" style="margin-top:0">☁️ <b>Connected.</b> ${S.cloud.lastPush ? "Last saved to Google Drive " + ago(S.cloud.lastPush) + "." : "Not saved yet."} Changes are saved automatically while you use the planner. On another device, open your link and sign in – your planner comes along.</p>
