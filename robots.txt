@@ -1,3 +1,0 @@
-User-agent: *
-Disallow: /fit/app-v8r3m6t1/
-Disallow: /app-v8r3m6t1/
