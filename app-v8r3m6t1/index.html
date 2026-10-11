@@ -1575,7 +1575,7 @@ function workoutRow(w, o = {}) {
 function vPlan() {
   const t = today(), W = E.week(S, t), C = E.cycleInfo(S, t);
   const cols = W.days.map((x, i) => {
-    const v = S.week[i], tp = S.templates.find(z => z.id === v), s = STI[x.status] || ["", ""], ph = C && !C.none ? E.cycleInfo(S, x.date) : null;
+    const v = S.week[i], tp = S.templates.find(z => z.id === v), s = STI[x.status] || ["", ""], cy = C && !C.none ? E.cycleInfo(S, x.date) : null, ph = cy && !cy.none ? cy : null;   // a day before your first logged period has no phase
     return `<button class="pday ${x.date === t ? "today" : ""} ${s[1]}" data-act="pickDay" data-v="${i}"><div class="pdh"><b>${DOWL[i]}</b><span>${dshort(x.date)}</span>${ph ? `<i class="pdot2 cyc-${ph.phase}" data-tip="${esc(E.PHASES[ph.phase][0])} phase"></i>` : ""}</div>
       <div class="pdb">${v === "rest" ? `<div class="emo">🌿</div><b>Rest day</b>` : tp ? `<div class="emo">${kindE(tp.kind)}</div><b>${esc(tp.name)}</b><span class="tiny muted">${fmin(tp.min)}</span>` : `<div class="emo faint">+</div><span class="muted small">Free day</span>`}</div>
       <div class="pdf">${x.status === "done" || x.status === "swapped" || x.status === "bonus" ? `<span class="badge ok">done ✓</span>` : x.status === "missed" ? `<span class="badge">skipped</span>` : x.status === "rest" && v !== "rest" ? `<span class="badge">rested</span>` : x.status === "planned" ? `<span class="badge b">${x.date === t ? "today" : "to do"}</span>` : ""}</div></button>`;
